@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Tema claro fijo: se usa al aire libre y con sol, donde el contraste alto se lee mejor. */
+body {
+  background: #fafaf9;
+  color: #1c1917;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
