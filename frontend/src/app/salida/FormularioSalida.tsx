@@ -3,6 +3,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { atributosControl, Campo, CLASES_CONTROL } from "@/components/Campo";
 import { PanelFirma } from "@/components/PanelFirma";
+import { registrarSalida } from "@/lib/contrato";
 import {
   DESTINO_MAX,
   formatearFecha,
@@ -51,6 +52,13 @@ export function FormularioSalida() {
     }
   };
 
+  /** Deja el formulario vacío (con la fecha de hoy) para registrar otra entrega. */
+  const reiniciar = () => {
+    setCampos({ idLote: "", destino: "", fecha: hoy });
+    setErrores({});
+    setConfirmado(null);
+  };
+
   if (confirmado) {
     return (
       <PanelFirma
@@ -61,6 +69,8 @@ export function FormularioSalida() {
           { etiqueta: "Fecha de entrega", valor: formatearFecha(confirmado.fecha) },
         ]}
         alEditar={() => setConfirmado(null)}
+        enviar={(direccion, avisos) => registrarSalida(confirmado, direccion, avisos)}
+        alTerminar={reiniciar}
       />
     );
   }

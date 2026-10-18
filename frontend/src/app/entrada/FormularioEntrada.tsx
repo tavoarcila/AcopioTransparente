@@ -3,6 +3,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { atributosControl, Campo, CLASES_CONTROL } from "@/components/Campo";
 import { PanelFirma } from "@/components/PanelFirma";
+import { registrarEntrada } from "@/lib/contrato";
 import {
   CANTIDAD_MAXIMA,
   CATEGORIAS,
@@ -53,6 +54,13 @@ export function FormularioEntrada() {
     }
   };
 
+  /** Deja el formulario vacío (con la fecha de hoy) para registrar otro lote. */
+  const reiniciar = () => {
+    setCampos({ categoria: "", cantidad: "", fecha: hoy });
+    setErrores({});
+    setConfirmado(null);
+  };
+
   if (confirmado) {
     return (
       <PanelFirma
@@ -66,6 +74,8 @@ export function FormularioEntrada() {
           { etiqueta: "Fecha de recepción", valor: formatearFecha(confirmado.fecha) },
         ]}
         alEditar={() => setConfirmado(null)}
+        enviar={(direccion, avisos) => registrarEntrada(confirmado, direccion, avisos)}
+        alTerminar={reiniciar}
       />
     );
   }

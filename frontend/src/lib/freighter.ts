@@ -11,7 +11,49 @@ import {
   isAllowed,
   isConnected,
   requestAccess,
+  signTransaction,
 } from "@stellar/freighter-api";
+import { FRASE_RED_TESTNET } from "./config";
+
+/** Respuesta de firma en el formato que espera el cliente del contrato. */
+export interface TransaccionFirmada {
+  signedTxXdr: string;
+  signerAddress?: string;
+  error?: { message: string; code: number };
+}
+
+/**
+ * Pide a Freighter que firme una transacción.
+ *
+ * Freighter muestra al usuario qué función del contrato se invoca y con qué
+ * datos antes de firmar. La llave privada nunca sale de la extensión: aquí
+ * solo entra la transacción y sale firmada.
+ *
+ * @param xdr Transacción ya simulada, en XDR base64.
+ * @param direccion Cuenta que debe firmar.
+ * @param fraseRed Red de la transacción; por defecto testnet.
+ */
+export async function firmarTransaccion(
+  xdr: string,
+  direccion: string,
+  fraseRed: string = FRASE_RED_TESTNET,
+): Promise<TransaccionFirmada> {
+  const respuesta = await signTransaction(xdr, {
+    networkPassphrase: fraseRed,
+    address: direccion,
+  });
+  if (respuesta.error) {
+    return {
+      signedTxXdr: "",
+      error: {
+        message: respuesta.error.message ?? "Freighter no firmó la transacción.",
+        // -4 es el código con el que Freighter indica que el usuario rechazó.
+        code: respuesta.error.code ?? -1,
+      },
+    };
+  }
+  return { signedTxXdr: respuesta.signedTxXdr, signerAddress: respuesta.signerAddress };
+}
 
 /** Estado de la wallet tal como lo necesita la interfaz. */
 export type EstadoBilletera =
