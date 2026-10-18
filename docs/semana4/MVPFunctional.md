@@ -9,7 +9,7 @@ En la semana 3 elegí la **opción A: contrato propio**. Esta semana quedó escr
 | Qué | Enlace |
 |---|---|
 | Video (producto + pitch, máx. 3 min) | **PENDIENTE: enlace de YouTube** |
-| Producto en línea | **PENDIENTE: enlace de Vercel** |
+| Producto en línea | [acopio-transparente.vercel.app](https://acopio-transparente.vercel.app) |
 | Contrato en testnet | [CBVTVCEEHRCWCRI3AO3ELDAJJ6W6AY7IUZ57QG37SHOHFZDYN2TUCIFU](https://stellar.expert/explorer/testnet/contract/CBVTVCEEHRCWCRI3AO3ELDAJJ6W6AY7IUZ57QG37SHOHFZDYN2TUCIFU) |
 | Subida del código (WASM) | [ed9efb2c…](https://stellar.expert/explorer/testnet/tx/ed9efb2ced9020f6bef02dc939b0fbda06160d2128b8f3b608265158d51c11c8) |
 | Despliegue del contrato (fija la cuenta administradora) | [17455f9d…](https://stellar.expert/explorer/testnet/tx/17455f9d01c09f50d1620092df91dd55dfecc71e12742155903a31fac32e5157) |
@@ -41,7 +41,7 @@ El tercero salió de la primera prueba real: en el destino se escribió "Familia
 
 Ajustes ordenados por impacto y esfuerzo:
 
-1. **Antes del cierre (alto impacto, bajo esfuerzo):** publicar el front en Vercel, grabar el video y reforzar la ayuda del campo destino con ejemplos.
+1. **Antes del cierre (alto impacto, bajo esfuerzo):** grabar el video y reforzar la ayuda del campo destino con ejemplos.
 2. **Antes del cierre (alto impacto, esfuerzo medio):** reemplazar el destino libre por una lista de barrios y albergues del centro.
 3. **Pendiente (impacto medio, esfuerzo alto):** salidas parciales de un lote y soporte para varios centros de acopio con su propio administrador.
 4. **Pendiente:** la historia 1 del Blueprint (el donante registra su despacho). Hoy el donante recibe el número de lote como comprobante y lo consulta en el tablero.
@@ -60,7 +60,7 @@ Ajustes ordenados por impacto y esfuerzo:
 
 **Adopción.** El mayor riesgo no es técnico: que un voluntario sobrecargado en plena emergencia instale Freighter y firme cada lote. Esto todavía no se ha probado con usuarios reales.
 
-**Pendientes:** publicar en Vercel, grabar y enlazar el video, registrar el proyecto en Apex, y la lista cerrada de destinos.
+**Pendientes:** grabar y enlazar el video, registrar el proyecto en Apex, y la lista cerrada de destinos.
 
 ## Plan de validación con usuarios
 
