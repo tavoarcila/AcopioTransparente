@@ -9,8 +9,11 @@ set -euo pipefail
 
 ID_CONTRATO="${1:-acopio}"
 DESTINO="../frontend/src/lib/contrato/cliente-generado.ts"
-TEMPORAL="$(mktemp -d)"
-trap 'rm -rf "$TEMPORAL"' EXIT
+BASE_TEMPORAL="$(mktemp -d)"
+trap 'rm -rf "$BASE_TEMPORAL"' EXIT
+# La CLI usa el nombre de la carpeta como nombre de paquete npm, que solo
+# admite minúsculas; el nombre aleatorio de mktemp puede traer mayúsculas.
+TEMPORAL="$BASE_TEMPORAL/cliente-acopio"
 
 echo "Generando cliente para el contrato: $ID_CONTRATO"
 stellar contract bindings typescript \

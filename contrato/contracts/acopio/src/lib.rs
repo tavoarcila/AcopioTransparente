@@ -40,6 +40,19 @@ pub const LIMITE_PAGINA: u32 = 50;
 /// Ledgers aproximados en un día (un ledger cada ~5 segundos).
 const LEDGERS_POR_DIA: u32 = 17_280;
 
+/// Si a un dato le queda menos de esta vida, se le extiende.
+const UMBRAL_TTL: u32 = LEDGERS_POR_DIA;
+
+/// Vida a la que se extiende un dato: una semana.
+///
+/// Antes se extendía al máximo de la red (~180 días), pero el alquiler del
+/// almacenamiento en testnet subió tanto que esa extensión hacía que cada
+/// registro costara miles de XLM y la transacción ni se podía armar. Una
+/// semana es barata; para conservar el historial más tiempo se extiende
+/// aparte con `stellar contract extend`, y si un dato llega a archivarse no
+/// se pierde: se restaura con `stellar contract restore`.
+const OBJETIVO_TTL: u32 = 7 * LEDGERS_POR_DIA;
+
 /// Segundos en un día, para pasar el reloj de la red a días calendario.
 const SEGUNDOS_POR_DIA: u64 = 86_400;
 
@@ -334,23 +347,22 @@ fn leer_lote(env: &Env, id: u32) -> Result<Lote, Error> {
         .ok_or(Error::LoteNoExiste)
 }
 
-/// Guarda un lote y le extiende la vida en el almacenamiento al máximo que
-/// permite la red, para que el historial siga consultable el mayor tiempo posible.
+/// Guarda un lote y, si le queda poca vida en el almacenamiento, se la
+/// extiende a `OBJETIVO_TTL`. Ver `OBJETIVO_TTL` para el porqué del límite.
 fn guardar_lote(env: &Env, lote: &Lote) {
     let clave = Clave::Lote(lote.id);
-    let maximo = env.storage().max_ttl();
     env.storage().persistent().set(&clave, lote);
     env.storage()
         .persistent()
-        .extend_ttl(&clave, maximo - LEDGERS_POR_DIA, maximo);
+        .extend_ttl(&clave, UMBRAL_TTL, OBJETIVO_TTL);
 }
 
-/// Extiende la vida de los datos de instancia (admin y total de lotes).
+/// Extiende la vida de los datos de instancia (admin y total de lotes) si
+/// les queda poca.
 fn extender_instancia(env: &Env) {
-    let maximo = env.storage().max_ttl();
     env.storage()
         .instance()
-        .extend_ttl(maximo - LEDGERS_POR_DIA, maximo);
+        .extend_ttl(UMBRAL_TTL, OBJETIVO_TTL);
 }
 
 /// Valida que una fecha AAAAMMDD exista y no sea posterior al día actual de la red.

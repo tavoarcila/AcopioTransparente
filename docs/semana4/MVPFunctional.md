@@ -10,7 +10,9 @@ En la semana 3 elegí la **opción A: contrato propio**. Esta semana quedó escr
 |---|---|
 | Video (producto + pitch, máx. 3 min) | **PENDIENTE: enlace de YouTube** |
 | Producto en línea | [acopio-transparente.vercel.app](https://acopio-transparente.vercel.app) |
-| Contrato en testnet | [CBVTVCEEHRCWCRI3AO3ELDAJJ6W6AY7IUZ57QG37SHOHFZDYN2TUCIFU](https://stellar.expert/explorer/testnet/contract/CBVTVCEEHRCWCRI3AO3ELDAJJ6W6AY7IUZ57QG37SHOHFZDYN2TUCIFU) |
+| Contrato en testnet (actual, v2) | [CABHUEGDEQUIKBZ2CO5C2FHRNRXUTHA5OEG5GIRYV7VMSLAU2KRV6FCX](https://stellar.expert/explorer/testnet/contract/CABHUEGDEQUIKBZ2CO5C2FHRNRXUTHA5OEG5GIRYV7VMSLAU2KRV6FCX) |
+| Despliegue del contrato v2 | [d10bd2bd…](https://stellar.expert/explorer/testnet/tx/d10bd2bdd448a8ae6efd4b3c8d3abdbcb3c5f68f622b6ce198a489d8f257b4c8) |
+| Contrato en testnet (v1, las pruebas de abajo) | [CBVTVCEEHRCWCRI3AO3ELDAJJ6W6AY7IUZ57QG37SHOHFZDYN2TUCIFU](https://stellar.expert/explorer/testnet/contract/CBVTVCEEHRCWCRI3AO3ELDAJJ6W6AY7IUZ57QG37SHOHFZDYN2TUCIFU) |
 | Subida del código (WASM) | [ed9efb2c…](https://stellar.expert/explorer/testnet/tx/ed9efb2ced9020f6bef02dc939b0fbda06160d2128b8f3b608265158d51c11c8) |
 | Despliegue del contrato (fija la cuenta administradora) | [17455f9d…](https://stellar.expert/explorer/testnet/tx/17455f9d01c09f50d1620092df91dd55dfecc71e12742155903a31fac32e5157) |
 | `registrar_entrada`: lote #1, Alimentos, 5 unidades | [470461ef…](https://stellar.expert/explorer/testnet/tx/470461efbef19be28d2aaa1bdfa581a37c90ee98872675e95b6b3aadf1141788) |
@@ -19,6 +21,8 @@ En la semana 3 elegí la **opción A: contrato propio**. Esta semana quedó escr
 | Cuenta administradora del centro | [GCWSE4EW…NTMW](https://stellar.expert/explorer/testnet/account/GCWSE4EWR7SIR4JSBCXCVHKFH2AHUEM7FTTMD6NUE6QYZH6VQ6VGNTMW) |
 
 Las tres invocaciones se hicieron desde el front, firmadas con Freighter.
+
+**Por qué hay un contrato v2 (25 de octubre de 2026).** La v1 extendía la vida de cada registro al máximo que permite la red (~180 días). Cuando el alquiler del almacenamiento en testnet se disparó, esa extensión subió el costo de un registro de 0,6 XLM a más de 3.800 XLM, por encima del máximo que admite una transacción, y el front ya no podía registrar. La v2 extiende la vida a una semana (un registro cuesta ~12,5 XLM de prueba). El historial se conserva más tiempo con `stellar contract extend` y, si un dato se archiva, se recupera con `stellar contract restore`: en Stellar archivar no es borrar. La v1 y sus transacciones siguen consultables en el explorador.
 
 ### Qué se construyó
 

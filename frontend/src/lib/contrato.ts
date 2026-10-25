@@ -163,6 +163,11 @@ function mensajeDeError(error: unknown): string {
   if (error instanceof Error && /not found|404/i.test(error.message)) {
     return "La cuenta de Freighter no existe en testnet. Fondéala con Friendbot desde la extensión.";
   }
+  // El SDK lanza esto cuando el costo de la transacción supera el máximo que
+  // admite Stellar (pasa si el alquiler del almacenamiento en la red se dispara).
+  if (error instanceof Error && /fee/i.test(error.message)) {
+    return "La red está cobrando más de lo normal por guardar datos. Inténtalo más tarde.";
+  }
   if (error instanceof Error && /network|fetch|timeout/i.test(error.message)) {
     return "No hubo conexión con Stellar. Revisa tu internet e inténtalo de nuevo.";
   }
